@@ -9,13 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # রাইট পারমিশন
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          ref: 'M3u8' # সরাসরি আপনার M3u8 ব্রাঞ্চটি সিলেক্ট করা হয়েছে
+          ref: 'M3u8' # আপনার নির্দিষ্ট ব্রাঞ্চ
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -27,13 +27,19 @@ jobs:
           pip install requests pytz
 
       - name: Run Sports Scraper
-        run: python crichd.py # এখানে ফাইলের নাম আপডেট করা হয়েছে
+        run: python crichd.py
 
       - name: Commit and Push Changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          
+          # ফাইল স্টেজিং
           git add "IBS TV special.m3u"
-          git commit -m "Crichd Sports Update: $(date)" || exit 0
+          
+          # যদি কোনো পরিবর্তন থাকে তবেই কমিট করবে, অন্যথায় সফলভাবে শেষ হবে
+          git diff --quiet && git diff --staged --quiet || git commit -m "Crichd Sports Update: $(date)"
+          
+          # ফোর্স পুশ করার প্রয়োজন হলে origin M3u8
           git push origin M3u8
           
