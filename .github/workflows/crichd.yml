@@ -13,14 +13,12 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          ref: 'M3u8' # নির্দিষ্ট ব্রাঞ্চ
+        uses: actions/checkout@v4 # Node.js 24 সাপোর্ট করার জন্য v4 এ আপডেট করা হলো
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Python-এর লেটেস্ট ভার্সনে আপডেট করা হলো
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
       - name: Install Dependencies
         run: |
@@ -31,15 +29,17 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           
-          # ব্রাঞ্চের হিস্ট্রি ঠিক রাখা
-          git add "Crichd playlist.m3u" || true
+          # ব্রাঞ্চ পুল করা
+          git pull origin M3u8 --rebase || true
           
-          # কমিট করার চেষ্টা (যদি কোনো পরিবর্তন থাকে)
-          git commit -m "Crichd Sports Update: $(date)" || echo "No changes to commit, continuing..."
+          git add "Crichd playlist.m3u"
           
-          # জোরপূর্বক পুশ করা (Force push)
+          # পরিবর্তন চেক করুন: কোনো পরিবর্তন থাকলে কমিট হবে, অন্যথায় স্কিপ করবে
+          git diff --staged --quiet || git commit -m "Crichd Sports Update: $(date)"
+          
+          # পুশ করা
           git push origin M3u8 --force
           
