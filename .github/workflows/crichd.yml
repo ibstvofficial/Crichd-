@@ -9,13 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # রাইট পারমিশন নিশ্চিত করা
+      contents: write # রাইট পারমিশন
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          ref: 'M3u8' # আপনার নির্দিষ্ট ব্রাঞ্চ
+          ref: 'M3u8' # নির্দিষ্ট ব্রাঞ্চ
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -31,16 +31,15 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
           
-          # রিমোট ব্রাঞ্চের সাথে সমন্বয়
-          git pull origin M3u8 --rebase || true
+          # ব্রাঞ্চের হিস্ট্রি ঠিক রাখা
+          git add "Crichd playlist.m3u" || true
           
-          git add "Crichd playlist.m3u"
+          # কমিট করার চেষ্টা (যদি কোনো পরিবর্তন থাকে)
+          git commit -m "Crichd Sports Update: $(date)" || echo "No changes to commit, continuing..."
           
-          # পরিবর্তন চেক করুন: যদি কোনো পরিবর্তন থাকে তবেই কমিট করবে, না থাকলে স্কিপ করবে
-          git diff --cached --quiet --exit-code || git commit -m "Crichd Sports Update: $(date)"
+          # জোরপূর্বক পুশ করা (Force push)
+          git push origin M3u8 --force
           
-          # যদি কমিট না-ও হয়, তবুও যাতে পুশ করার সময় এরর না আসে
-          git push origin M3u8 --force || true
