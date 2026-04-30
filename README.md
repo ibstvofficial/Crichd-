@@ -1,24 +1,26 @@
-# 🏏 IBS TV Special Sports
+# 🏏 Crichd Live Sports Auto-Updater
 
-This repository contains an automated system to fetch, clean, and generate updated M3U playlists for live sports events from Crichd sources. It is designed to provide high-quality streams along with dynamic promotions and neat organization for end-users.
+এটি একটি স্বয়ংক্রিয় গিটহাব অটোমেশন সিস্টেম, যা বিভিন্ন সোর্স থেকে লাইভ স্পোর্টস ইভেন্টের লিংক সংগ্রহ করে, সেগুলোকে পরিমার্জন (Clean) করে এবং একটি প্রিমিয়াম M3U প্লেলিস্ট ফাইল তৈরি করে।
 
-## Features
-- **Auto Update:** Automatically updates the playlist every 30 minutes.
-- **Random Promotions:** Randomly appends dynamic promotion videos at the beginning of each category.
-- **Smart Formatting:** Cleans raw Crichd names and groups channels properly.
-- **Dedicated Branch:** Managed on the `M3u8` branch to keep the main repository clean.
+---
 
-## Requirements
-- Python 3.x
-- `requests` and `pytz` libraries
+## 🚀 Features (বৈশিষ্ট্যসমূহ)
+* **অটো-আপডেট (Auto Update):** প্রতি ৩০ মিনিট পরপর স্বয়ংক্রিয়ভাবে প্লেলিস্ট আপডেট হয়।
+* **স্মার্ট ক্যাটাগরি (Smart Formatting):** অপ্রয়োজনীয় লেখা পরিষ্কার করে সুন্দর ও নির্ভুল নাম শো করে।
+* **প্রমোশন সিস্টেম (Dynamic Promotions):** প্রতিটি ক্যাটাগরির শুরুতে রেন্ডম প্রমোশন ভিডিও যুক্ত হয়।
+* **০% ডাউনটাইম:** সবসময় ফ্রেশ এবং নতুন লিংক আপডেট করে।
 
-## Usage
-The system processes the following sources:
-- Go Live Events
-- Crichd Live Events
-- Crichdat Live Events
+---
 
-Generated output is saved directly to: `IBS TV special.m3u`
+## 📁 Output Files
+* **Generated File:** `Crichd playlist.m3u`
 
-## Workflow (Automation)
-The `.github/workflows/crichd.yml` uses GitHub Actions to run `crichd.py` on a schedule, ensuring users always get the freshest links.
+---
+
+## ⚙️ Workflow (ওয়ার্কফ্লো)
+এই প্রজেক্টে গিটহাব অ্যাকশন ব্যবহার করা হয়েছে, যা `crichd.py` স্ক্রিপ্টটি রান করে এবং `main` ব্রাঞ্চে ফাইলটি স্বয়ংক্রিয়ভাবে পুশ করে দেয়।
+
+### 🛠️ Requirements (প্রয়োজনীয় লাইব্রেরি)
+স্ক্রিপ্টটি লোকালি চালানোর জন্য পাইথনে নিচের লাইব্রেরিগুলো ইন্সটল করা থাকতে হবে:
+```bash
+pip install requests pytz
