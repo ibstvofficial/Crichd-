@@ -11,7 +11,7 @@ urls = [
     "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/Crichdat_Live.m3u"
 ]
 
-# প্রোমোশন ভিডিওর তালিকা (রেন্ডম সিলেকশনের জন্য)
+# প্রোমোশন ভিডিওর তালিকা
 PROMO_VIDEOS = [
     "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/promo%20dual.mp4",
     "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/1777291577865.mp4",
@@ -37,10 +37,8 @@ def create_sports_playlist():
     current_time = datetime.now(bd_tz).strftime('%I:%M %p %d-%m-%Y')
 
     merged_content = f"""#EXTM3U
-# Playlist Name: IBS TV SPECIAL SPORTS
-# Total Events: AUTO UPDATING
+# Playlist Name: Crichd Live Sports
 # Last Update: {current_time} (BD Time)
-# Owner: Md. Sakib Hasan
 # Telegram: https://t.me/bdixiptvbd\n"""
 
     DEFAULT_LOGO = "https://bdixiptvbd.com/logo.png"
@@ -72,7 +70,7 @@ def create_sports_playlist():
                                 name_part = line.split(",")[-1]
                                 final_name = clean_sports_name(name_part)
 
-                                # গ্রুপের শুরুতে রেন্ডম প্রোমোশন ভিডিও যোগ করা (প্রতিটি গ্রুপে একবার)
+                                # গ্রুপের শুরুতে রেন্ডম প্রোমোশন ভিডিও যোগ করা
                                 if final_group not in added_groups:
                                     random_promo = random.choice(PROMO_VIDEOS)
                                     promo_line = f'#EXTINF:-1 tvg-logo="{DEFAULT_LOGO}" group-title="{final_group}",--- [ {final_group} PROMO ] ---'
@@ -92,12 +90,13 @@ def create_sports_playlist():
             print(f"Error fetching sports: {e}")
 
     try:
-        with open("IBS TV special.m3u", "w", encoding="utf-8") as f:
+        # ফাইলের নাম পরিবর্তন করে দেওয়া হলো
+        with open("Crichd playlist.m3u", "w", encoding="utf-8") as f:
             f.write(merged_content)
-        print(f"Success! Sports Playlist updated at {current_time}")
+        print(f"Success! Crichd Playlist updated at {current_time}")
     except Exception as e:
         print(f"Save Error: {e}")
 
 if __name__ == "__main__":
     create_sports_playlist()
-                          
+                                
