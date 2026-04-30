@@ -12,11 +12,13 @@ jobs:
       contents: write # রাইট পারমিশন
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4 # Node.js 24 সাপোর্ট করার জন্য v4 এ আপডেট করা হলো
+      - name: Checkout Main Branch
+        uses: actions/checkout@v4
+        with:
+          ref: 'main' # এখানে M3u8 এর বদলে main ব্রাঞ্চ দেওয়া হয়েছে
 
       - name: Set up Python
-        uses: actions/setup-python@v5 # Python-এর লেটেস্ট ভার্সনে আপডেট করা হলো
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
@@ -32,14 +34,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # ব্রাঞ্চ পুল করা
-          git pull origin M3u8 --rebase || true
+          # লেটেস্ট পরিবর্তনগুলো নিয়ে সমন্বয়
+          git pull origin main --rebase || true
           
           git add "Crichd playlist.m3u"
           
           # পরিবর্তন চেক করুন: কোনো পরিবর্তন থাকলে কমিট হবে, অন্যথায় স্কিপ করবে
           git diff --staged --quiet || git commit -m "Crichd Sports Update: $(date)"
           
-          # পুশ করা
-          git push origin M3u8 --force
+          # সফলভাবে পুশ করার জন্য
+          git push origin main --force
           
