@@ -34,12 +34,19 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # ব্রাঞ্চ পুল করা যাতে কনফ্লিক্ট না হয়
-          git pull origin M3u8 --rebase || true
+          # পূর্বের পরিবর্তনগুলো স্ট্যাশ করা যাতে কনফ্লিক্ট না হয়
+          git stash --include-untracked || true
           
+          # রিমোট ব্রাঞ্চ থেকে লেটেস্ট কোড পুল করা
+          git pull origin M3u8 --rebase --strategy-option ours || true
+          
+          # স্ট্যাশ করা পরিবর্তন ফিরিয়ে আনা
+          git stash pop || true
+          
+          # ফাইল যুক্ত করা
           git add "IBS TV special.m3u"
           
-          # যদি নতুন কোনো পরিবর্তন থাকে তবেই কমিট করবে, অন্যথায় স্কিপ করবে
+          # যদি নতুন কোনো পরিবর্তন থাকে তবেই কমিট করবে
           git diff --quiet && git diff --staged --quiet || git commit -m "Crichd Sports Update: $(date)"
           
           # পরিবর্তন পুশ করা
