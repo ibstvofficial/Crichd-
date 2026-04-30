@@ -3,13 +3,13 @@ name: Auto Update IBS Special Sports
 on:
   schedule:
     - cron: '*/30 * * * *' # প্রতি ৩০ মিনিট পর পর
-  workflow_dispatch:        # ম্যানুয়ালি রান করার জন্য বাটন
+  workflow_dispatch:        # ম্যানুয়াল রানের জন্য বাটন
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # রাইট পারমিশন
+      contents: write # রাইট পারমিশন নিশ্চিত করা
 
     steps:
       - name: Checkout Code
@@ -34,12 +34,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # ফাইল স্টেজিং
+          # ব্রাঞ্চ পুল করা যাতে কনফ্লিক্ট না হয়
+          git pull origin M3u8 --rebase || true
+          
           git add "IBS TV special.m3u"
           
-          # যদি কোনো পরিবর্তন থাকে তবেই কমিট করবে, অন্যথায় সফলভাবে শেষ হবে
+          # যদি নতুন কোনো পরিবর্তন থাকে তবেই কমিট করবে, অন্যথায় স্কিপ করবে
           git diff --quiet && git diff --staged --quiet || git commit -m "Crichd Sports Update: $(date)"
           
-          # ফোর্স পুশ করার প্রয়োজন হলে origin M3u8
+          # পরিবর্তন পুশ করা
           git push origin M3u8
           
