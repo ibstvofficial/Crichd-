@@ -1,0 +1,103 @@
+import requests
+from datetime import datetime
+import pytz
+import re
+import random
+
+# স্পোর্টস সোর্স ইউআরএলগুলো
+urls = [
+    "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/Go_Live_Events.m3u",
+    "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/Live_Events.m3u",
+    "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/Crichdat_Live.m3u"
+]
+
+# প্রোমোশন ভিডিওর তালিকা (রেন্ডম সিলেকশনের জন্য)
+PROMO_VIDEOS = [
+    "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/promo%20dual.mp4",
+    "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/1777291577865.mp4",
+    "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/1777291501194.mp4"
+]
+
+def clean_sports_name(name):
+    junk = ["| High Quality", "| BDIX", "| VIP", "SD", "HD", "FHD", "(Backup)", "Premium", "1080p", "720p"]
+    for word in junk:
+        name = name.replace(word, "")
+    return name.strip()
+
+def normalize_group(group_name):
+    group_name = group_name.upper()
+    if any(x in group_name for x in ["SPORTS", "CRICKET", "LIVE", "FOOTBALL"]):
+        return "LIVE SPORTS"
+    if any(x in group_name for x in ["BANGLA", "BD"]):
+        return "LIVE TV"
+    return "SPORTS EVENTS"
+
+def create_sports_playlist():
+    bd_tz = pytz.timezone('Asia/Dhaka')
+    current_time = datetime.now(bd_tz).strftime('%I:%M %p %d-%m-%Y')
+
+    merged_content = f"""#EXTM3U
+# Playlist Name: IBS TV SPECIAL SPORTS
+# Total Events: AUTO UPDATING
+# Last Update: {current_time} (BD Time)
+# Owner: Md. Sakib Hasan
+# Telegram: https://t.me/bdixiptvbd\n"""
+
+    DEFAULT_LOGO = "https://bdixiptvbd.com/logo.png"
+    added_groups = set()
+    seen_links = set()
+
+    for url in urls:
+        try:
+            print(f"Fetching from: {url}")
+            response = requests.get(url, timeout=25)
+            if response.status_code == 200:
+                lines = response.text.splitlines()
+                
+                i = 0
+                while i < len(lines):
+                    line = lines[i].strip()
+                    if line.startswith("#EXTINF"):
+                        if (i + 1) < len(lines):
+                            sports_url = lines[i+1].strip()
+                            
+                            if sports_url.startswith("http") and sports_url not in seen_links:
+                                group_match = re.search(r'group-title="([^"]+)"', line)
+                                raw_group = group_match.group(1) if group_match else "LIVE SPORTS"
+                                final_group = normalize_group(raw_group)
+
+                                logo_match = re.search(r'tvg-logo="([^"]+)"', line)
+                                final_logo = logo_match.group(1) if (logo_match and logo_match.group(1)) else DEFAULT_LOGO
+
+                                name_part = line.split(",")[-1]
+                                final_name = clean_sports_name(name_part)
+
+                                # গ্রুপের শুরুতে রেন্ডম প্রোমোশন ভিডিও যোগ করা (প্রতিটি গ্রুপে একবার)
+                                if final_group not in added_groups:
+                                    random_promo = random.choice(PROMO_VIDEOS)
+                                    promo_line = f'#EXTINF:-1 tvg-logo="{DEFAULT_LOGO}" group-title="{final_group}",--- [ {final_group} PROMO ] ---'
+                                    merged_content += promo_line + "\n" + random_promo + "\n"
+                                    added_groups.add(final_group)
+
+                                new_line = f'#EXTINF:-1 tvg-logo="{final_logo}" group-title="{final_group}",{final_name}'
+                                merged_content += new_line + "\n" + sports_url + "\n"
+                                seen_links.add(sports_url)
+                            
+                            i += 2
+                        else:
+                            i += 1
+                    else:
+                        i += 1
+        except Exception as e:
+            print(f"Error fetching sports: {e}")
+
+    try:
+        with open("IBS TV special.m3u", "w", encoding="utf-8") as f:
+            f.write(merged_content)
+        print(f"Success! Sports Playlist updated at {current_time}")
+    except Exception as e:
+        print(f"Save Error: {e}")
+
+if __name__ == "__main__":
+    create_sports_playlist()
+                          
