@@ -3,7 +3,7 @@ name: Auto Update IBS Special Sports
 on:
   schedule:
     - cron: '*/30 * * * *' # প্রতি ৩০ মিনিট পর পর
-  workflow_dispatch:        # ম্যানুয়াল রানের জন্য বাটন
+  workflow_dispatch:        # ম্যানুয়ালি রান করার জন্য বাটন
 
 jobs:
   build:
@@ -34,21 +34,9 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # পূর্বের পরিবর্তনগুলো স্ট্যাশ করা যাতে কনফ্লিক্ট না হয়
-          git stash --include-untracked || true
+          git pull origin M3u8 --rebase || true
+          git add "Crichd playlist.m3u"
           
-          # রিমোট ব্রাঞ্চ থেকে লেটেস্ট কোড পুল করা
-          git pull origin M3u8 --rebase --strategy-option ours || true
-          
-          # স্ট্যাশ করা পরিবর্তন ফিরিয়ে আনা
-          git stash pop || true
-          
-          # ফাইল যুক্ত করা
-          git add "IBS TV special.m3u"
-          
-          # যদি নতুন কোনো পরিবর্তন থাকে তবেই কমিট করবে
-          git diff --quiet && git diff --staged --quiet || git commit -m "Crichd Sports Update: $(date)"
-          
-          # পরিবর্তন পুশ করা
-          git push origin M3u8
+          git diff --staged --quiet || git commit -m "Crichd Sports Update: $(date)"
+          git push origin M3u8 --force
           
