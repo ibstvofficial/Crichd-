@@ -2,7 +2,6 @@ import requests
 from datetime import datetime
 import pytz
 import re
-import random
 
 # স্পোর্টস সোর্স ইউআরএলগুলো
 urls = [
@@ -11,12 +10,8 @@ urls = [
     "https://raw.githubusercontent.com/srhady/crichd-speical-live-event/refs/heads/main/Crichdat_Live.m3u"
 ]
 
-# প্রোমোশন ভিডিওর তালিকা
-PROMO_VIDEOS = [
-    "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/promo%20dual.mp4",
-    "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/1777291577865.mp4",
-    "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/1777291501194.mp4"
-]
+# IBS TV app promotion ভিডিও
+IBS_PROMO_VIDEO = "https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/promo%20dual.mp4"
 
 def clean_sports_name(name):
     junk = ["| High Quality", "| BDIX", "| VIP", "SD", "HD", "FHD", "(Backup)", "Premium", "1080p", "720p"]
@@ -39,11 +34,14 @@ def create_sports_playlist():
     merged_content = f"""#EXTM3U
 # Playlist Name: Crichd Live Sports
 # Last Update: {current_time} (BD Time)
+# Owner: Md. Sakib Hasan
 # Telegram: https://t.me/bdixiptvbd\n"""
 
     DEFAULT_LOGO = "https://bdixiptvbd.com/logo.png"
-    added_groups = set()
     seen_links = set()
+    
+    # গ্রুপ ধরে প্রোমোশন যুক্ত করার ট্র্যাকার
+    added_groups = set()
 
     for url in urls:
         try:
@@ -70,11 +68,10 @@ def create_sports_playlist():
                                 name_part = line.split(",")[-1]
                                 final_name = clean_sports_name(name_part)
 
-                                # গ্রুপের শুরুতে রেন্ডম প্রোমোশন ভিডিও যোগ করা
+                                # প্রোমোশন ভিডিও যুক্ত করার লজিক: প্রতিটি গ্রুপের জন্য একবারই প্রমোশন আসবে
                                 if final_group not in added_groups:
-                                    random_promo = random.choice(PROMO_VIDEOS)
                                     promo_line = f'#EXTINF:-1 tvg-logo="{DEFAULT_LOGO}" group-title="{final_group}",--- [ {final_group} PROMO ] ---'
-                                    merged_content += promo_line + "\n" + random_promo + "\n"
+                                    merged_content += promo_line + "\n" + IBS_PROMO_VIDEO + "\n"
                                     added_groups.add(final_group)
 
                                 new_line = f'#EXTINF:-1 tvg-logo="{final_logo}" group-title="{final_group}",{final_name}'
@@ -90,13 +87,12 @@ def create_sports_playlist():
             print(f"Error fetching sports: {e}")
 
     try:
-        # ফাইলের নাম পরিবর্তন করে দেওয়া হলো
         with open("Crichd playlist.m3u", "w", encoding="utf-8") as f:
             f.write(merged_content)
-        print(f"Success! Crichd Playlist updated at {current_time}")
+        print(f"Success! Crichd playlist.m3u updated at {current_time}")
     except Exception as e:
         print(f"Save Error: {e}")
 
 if __name__ == "__main__":
     create_sports_playlist()
-                                
+                            
