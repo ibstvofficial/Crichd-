@@ -1,4 +1,4 @@
-name: Auto Update IBS Special Sports
+name: Auto Update Crichd Sports
 
 on:
   schedule:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Main Branch
         uses: actions/checkout@v4
         with:
-          ref: 'main' # এখানে M3u8 এর বদলে main ব্রাঞ্চ দেওয়া হয়েছে
+          ref: 'main'
 
       - name: Set up Python
         uses: actions/setup-python@v5
