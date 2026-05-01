@@ -39,8 +39,6 @@ def create_sports_playlist():
 
     DEFAULT_LOGO = "https://bdixiptvbd.com/logo.png"
     seen_links = set()
-    
-    # গ্রুপ ধরে প্রোমোশন যুক্ত করার ট্র্যাকার
     added_groups = set()
 
     for url in urls:
@@ -48,41 +46,34 @@ def create_sports_playlist():
             print(f"Fetching from: {url}")
             response = requests.get(url, timeout=25)
             if response.status_code == 200:
-                lines = response.text.splitlines()
+                content = response.text
                 
-                i = 0
-                while i < len(lines):
-                    line = lines[i].strip()
-                    if line.startswith("#EXTINF"):
-                        if (i + 1) < len(lines):
-                            sports_url = lines[i+1].strip()
-                            
-                            if sports_url.startswith("http") and sports_url not in seen_links:
-                                group_match = re.search(r'group-title="([^"]+)"', line)
-                                raw_group = group_match.group(1) if group_match else "LIVE SPORTS"
-                                final_group = normalize_group(raw_group)
+                # M3U ফাইলের প্রতিটি চ্যানেল ব্লক আলাদা করার জন্য রেগুলার এক্সপ্রেশন
+                matches = re.findall(r'(#EXTINF:[^\n]*)\n(https?://[^\n]+)', content)
+                
+                for extinf, stream_url in matches:
+                    stream_url = stream_url.strip()
+                    if stream_url and stream_url not in seen_links:
+                        group_match = re.search(r'group-title="([^"]+)"', extinf)
+                        raw_group = group_match.group(1) if group_match else "LIVE SPORTS"
+                        final_group = normalize_group(raw_group)
 
-                                logo_match = re.search(r'tvg-logo="([^"]+)"', line)
-                                final_logo = logo_match.group(1) if (logo_match and logo_match.group(1)) else DEFAULT_LOGO
+                        logo_match = re.search(r'tvg-logo="([^"]+)"', extinf)
+                        final_logo = logo_match.group(1) if (logo_match and logo_match.group(1)) else DEFAULT_LOGO
 
-                                name_part = line.split(",")[-1]
-                                final_name = clean_sports_name(name_part)
+                        name_part = extinf.split(",")[-1]
+                        final_name = clean_sports_name(name_part)
 
-                                # প্রোমোশন ভিডিও যুক্ত করার লজিক: প্রতিটি গ্রুপের জন্য একবারই প্রমোশন আসবে
-                                if final_group not in added_groups:
-                                    promo_line = f'#EXTINF:-1 tvg-logo="{DEFAULT_LOGO}" group-title="{final_group}",--- [ {final_group} PROMO ] ---'
-                                    merged_content += promo_line + "\n" + IBS_PROMO_VIDEO + "\n"
-                                    added_groups.add(final_group)
+                        # প্রমোশন যোগ করার লজিক
+                        if final_group not in added_groups:
+                            promo_line = f'#EXTINF:-1 tvg-logo="{DEFAULT_LOGO}" group-title="{final_group}",--- [ {final_group} PROMO ] ---'
+                            merged_content += promo_line + "\n" + IBS_PROMO_VIDEO + "\n"
+                            added_groups.add(final_group)
 
-                                new_line = f'#EXTINF:-1 tvg-logo="{final_logo}" group-title="{final_group}",{final_name}'
-                                merged_content += new_line + "\n" + sports_url + "\n"
-                                seen_links.add(sports_url)
-                            
-                            i += 2
-                        else:
-                            i += 1
-                    else:
-                        i += 1
+                        new_line = f'#EXTINF:-1 tvg-logo="{final_logo}" group-title="{final_group}",{final_name}'
+                        merged_content += new_line + "\n" + stream_url + "\n"
+                        seen_links.add(stream_url)
+                        
         except Exception as e:
             print(f"Error fetching sports: {e}")
 
@@ -95,4 +86,4 @@ def create_sports_playlist():
 
 if __name__ == "__main__":
     create_sports_playlist()
-                            
+                  
