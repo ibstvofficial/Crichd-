@@ -21,7 +21,7 @@ def clean_sports_name(name):
 
 def normalize_group(group_name):
     group_name = group_name.upper()
-    if any(x in group_name for x in ["SPORTS", "CRICKET", "LIVE", "FOOTBALL"]):
+    if any(x in group_name for x in ["SPORTS", "CRICKET", "LIVE", "FOOTBALL", "IPL"]):
         return "LIVE SPORTS"
     if any(x in group_name for x in ["BANGLA", "BD"]):
         return "LIVE TV"
@@ -48,32 +48,45 @@ def create_sports_playlist():
             if response.status_code == 200:
                 content = response.text
                 
-                # M3U ফাইলের প্রতিটি চ্যানেল ব্লক আলাদা করার জন্য রেগুলার এক্সপ্রেশন
-                matches = re.findall(r'(#EXTINF:[^\n]*)\n(https?://[^\n]+)', content)
+                # এক্সট্রা অপশন ও স্ট্রিম লিংকসহ পুরো ব্লকটি ফেচ করার জন্য রেগুলার এক্সপ্রেশন
+                blocks = re.findall(r'(#EXTINF:[^\n]+(?:\n#EXTVLCOPT:[^\n]+)*)\n(https?://[^\n]+)', content, re.M)
                 
-                for extinf, stream_url in matches:
+                for ext_block, stream_url in blocks:
                     stream_url = stream_url.strip()
+                    
                     if stream_url and stream_url not in seen_links:
-                        group_match = re.search(r'group-title="([^"]+)"', extinf)
+                        # গ্রুপ ও লোগো বের করা
+                        group_match = re.search(r'group-title="([^"]+)"', ext_block)
                         raw_group = group_match.group(1) if group_match else "LIVE SPORTS"
                         final_group = normalize_group(raw_group)
 
-                        logo_match = re.search(r'tvg-logo="([^"]+)"', extinf)
+                        logo_match = re.search(r'tvg-logo="([^"]+)"', ext_block)
                         final_logo = logo_match.group(1) if (logo_match and logo_match.group(1)) else DEFAULT_LOGO
 
-                        name_part = extinf.split(",")[-1]
+                        # নাম পরিষ্কার করা
+                        name_part = ext_block.split(",")[-1].split("\n")[0]
                         final_name = clean_sports_name(name_part)
 
-                        # প্রমোশন যোগ করার লজিক
+                        # প্রমোশন যুক্ত করার লজিক
                         if final_group not in added_groups:
                             promo_line = f'#EXTINF:-1 tvg-logo="{DEFAULT_LOGO}" group-title="{final_group}",--- [ {final_group} PROMO ] ---'
                             merged_content += promo_line + "\n" + IBS_PROMO_VIDEO + "\n"
                             added_groups.add(final_group)
 
-                        new_line = f'#EXTINF:-1 tvg-logo="{final_logo}" group-title="{final_group}",{final_name}'
-                        merged_content += new_line + "\n" + stream_url + "\n"
-                        seen_links.add(stream_url)
+                        # নতুন ব্লকের হেডলাইন তৈরি (ভ্যালুগুলো ঠিক রেখে)
+                        new_extinf = f'#EXTINF:-1 tvg-logo="{final_logo}" group-title="{final_group}",{final_name}'
                         
+                        # এক্সট্রা অপশনগুলো যুক্ত করা
+                        merged_content += new_extinf + "\n"
+                        extra_opts = re.findall(r'(#EXTVLCOPT:[^\n]+)', ext_block)
+                        for opt in extra_opts:
+                            merged_content += opt + "\n"
+                        
+                        # স্ট্রিম লিংক যুক্ত করা
+                        merged_content += stream_url + "\n"
+                        
+                        seen_links.add(stream_url)
+
         except Exception as e:
             print(f"Error fetching sports: {e}")
 
@@ -86,4 +99,4 @@ def create_sports_playlist():
 
 if __name__ == "__main__":
     create_sports_playlist()
-                  
+                        
