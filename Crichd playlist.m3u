@@ -1,6 +1,6 @@
 #EXTM3U
 # Playlist Name: Crichd Live Sports
-# Last Update: 04:18 PM 22-05-2026 (BD Time)
+# Last Update: 06:37 PM 22-05-2026 (BD Time)
 # Owner: Md. Sakib Hasan
 # Telegram: https://t.me/bdixiptvbd
 #EXTINF:-1 tvg-logo="https://bdixiptvbd.com/logo.png" group-title="LIVE SPORTS",--- [ LIVE SPORTS PROMO ] ---
@@ -45,9 +45,3 @@ https://playerado.top/embed2.php?id=starsp1tam
 #EXTVLCOPT:http-referrer=https://player0003.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://playerado.top/embed2.php?id=starsp1tel
-#EXTINF:-1 tvg-logo="https://bdixiptvbd.com/logo.png" group-title="SPORTS EVENTS",--- [ SPORTS EVENTS PROMO ] ---
-https://raw.githubusercontent.com/ibstvofficial/IBS-TV-special-movies.m3u/refs/heads/main/promo%20dual.mp4
-#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=Nepal+vs+USA&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
-#EXTVLCOPT:http-referrer=https://player0003.com/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://playerado.top/embed2.php?id=cricgo2
