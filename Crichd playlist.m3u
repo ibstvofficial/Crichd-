@@ -1,6 +1,6 @@
 #EXTM3U
 # Playlist Name: Crichd Live Sports
-# Last Update: 12:56 AM 17-07-2026 (BD Time)
+# Last Update: 02:00 AM 17-07-2026 (BD Time)
 # Owner: Md. Sakib Hasan
 # Telegram: https://t.me/bdixiptvbd
 #EXTINF:-1 tvg-logo="https://bdixiptvbd.com/logo.png" group-title="LIVE SPORTS",--- [ LIVE SPORTS PROMO ] ---
@@ -63,3 +63,7 @@ https://playerado.top/news.php?id=gtv&v=su
 #EXTVLCOPT:http-referrer=https://player0003.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://playerado.top/news.php?id=cricgo3&v=su
+#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=Lanka+Premier+League+2026&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTVLCOPT:http-referrer=https://player0003.com/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://playerado.top/news.php?id=cricgo5&v=su
