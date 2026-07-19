@@ -1,6 +1,6 @@
 #EXTM3U
 # Playlist Name: Crichd Live Sports
-# Last Update: 11:13 AM 19-07-2026 (BD Time)
+# Last Update: 01:37 PM 19-07-2026 (BD Time)
 # Owner: Md. Sakib Hasan
 # Telegram: https://t.me/bdixiptvbd
 #EXTINF:-1 tvg-logo="https://bdixiptvbd.com/logo.png" group-title="LIVE SPORTS",--- [ LIVE SPORTS PROMO ] ---
@@ -23,22 +23,10 @@ https://playerado.top/news.php?id=asports&v=su
 #EXTVLCOPT:http-referrer=https://player0003.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://playerado.top/news.php?id=cricgo5&v=su
-#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=MLC+T20&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=India+vs+England&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
 #EXTVLCOPT:http-referrer=https://player0003.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://playerado.top/news.php?id=willow&v=su
-#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=MLC+T20&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
-#EXTVLCOPT:http-referrer=https://player0003.com/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://playerado.top/news.php?id=starsp2&v=su
-#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=MLC+T20&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
-#EXTVLCOPT:http-referrer=https://player0003.com/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://playerado.top/news.php?id=willowhd&v=su
-#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=MLC+T20&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
-#EXTVLCOPT:http-referrer=https://player0003.com/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-https://playerado.top/news.php?id=crich2&v=su
 #EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=India+vs+England&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
 #EXTVLCOPT:http-referrer=https://player0003.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
@@ -54,7 +42,15 @@ https://playerado.top/news.php?id=ten3&v=su
 #EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=India+vs+England&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
 #EXTVLCOPT:http-referrer=https://player0003.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://playerado.top/news.php?id=willowhd&v=su
+#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=India+vs+England&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTVLCOPT:http-referrer=https://player0003.com/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 https://playerado.top/news.php?id=cricgo4&v=su
+#EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=India+vs+England&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
+#EXTVLCOPT:http-referrer=https://player0003.com/
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+https://playerado.top/news.php?id=crich2&v=su
 #EXTINF:-1 tvg-logo="https://placehold.co/800x450/0f172a/ffffff.png?text=Bangladesh+vs+Zimbabwe&font=Oswald" group-title="SPORTS EVENTS",like Gecko) Chrome/120.0.0.0 Safari/537.36
 #EXTVLCOPT:http-referrer=https://player0003.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
